@@ -1,0 +1,26 @@
+name: Move README on Issue Creation
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  move-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Move README.md
+      run: |
+        mkdir -p step2
+        mv step1/README.md step2/README.md
+
+    - name: Commit changes
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add step2/README.md
+        git commit -m 'Move README.md from step 1 to step 2'
+        git push
